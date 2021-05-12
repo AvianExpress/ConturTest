@@ -23,7 +23,7 @@ namespace Test
         OpenFileDialog fd = new OpenFileDialog();
         private void button1_Click(object sender, EventArgs e)
         {
-            //Блок записи в datagridview
+            //Р’С‹РіСЂСѓР¶Р°РµРј РёР· С„Р°Р№Р»Р° РІ datagridview
             fd.Filter = "CSV|*.csv";
             if (fd.ShowDialog() == DialogResult.OK)
             {
@@ -34,7 +34,7 @@ namespace Test
 
                     List<string> listA = new List<string>();
                     List<string> listB = new List<string>();
-                    List<string> listС = new List<string>();
+                    List<string> listC = new List<string>();
                     while (!reader.EndOfStream)
                     {
                         var line = reader.ReadLine();
@@ -43,23 +43,23 @@ namespace Test
                         {
                             listA.Add(values[0]);
                             listB.Add(values[1]);
-                            listС.Add(values[2]);
+                            listC.Add(values[2]);
                         }
                         catch (Exception)
                         {
 
                         }
                     }
-                    //Заголовки
+                    //Р—Р°РїРѕР»РЅСЏРµРј Р·Р°РіРѕР»РѕРІРєРё
                     dataGridView1.Columns[0].HeaderText = listA[2];
                     dataGridView1.Columns[1].HeaderText = listB[2];
                     dataGridView1.Columns[2].HeaderText = listB[3];
                     dataGridView1.Columns[3].HeaderText = listB[4];
-                    dataGridView1.Columns[4].HeaderText = listС[2];
+                    dataGridView1.Columns[4].HeaderText = listC[2];
                 string main="";
                 string second="";
-                //Заполнение остальной таблицы
-                for (int i = 5, j = 0; i < listС.Count; i++, j++)
+                //Р—Р°РїРѕР»РЅР°РµРј РґР°С‚Р°РіСЂРёРґ
+                for (int i = 5, j = 0; i < listC.Count; i++, j++)
                 {
                     dataGridView1.Rows.Add();
                     int count12 = 0;
@@ -85,14 +85,14 @@ namespace Test
                                 dataGridView1[1, j].Value = main;
                                 dataGridView1[2, j].Value = second;
                                 dataGridView1[3, j].Value = listB[i];
-                                dataGridView1[4, j].Value = listС[i];
+                                dataGridView1[4, j].Value = listC[i];
                                 break;
                         }
                     }
                     else
                     {
                         dataGridView1[0, j].Value = listA[i];
-                        dataGridView1[4, j].Value = listС[i];
+                        dataGridView1[4, j].Value = listC[i];
                     }
                 }
 
@@ -106,7 +106,7 @@ namespace Test
      
         private void button2_Click(object sender, EventArgs e)
         {
-            //Блок соединения с базой данных
+            //РћС‚РєСЂС‹РІР°РµРј Р±Рґ Рё Р»РёРЅРєСѓРµРј 
             fd.Filter = "ACCDB |*.accdb";
             if (fd.ShowDialog() == DialogResult.OK)
             {
@@ -119,15 +119,15 @@ namespace Test
         }
 
         private void button3_Click(object sender, EventArgs e)
-        {   //Эта гигантская конструкция упрощает понимание того, что мы делаем не так, если мы ошиблись со вводом
+        {   //Р­С‚РѕС‚ РѕРіСЂРѕРјРЅС‹Р№ РєСѓСЃРѕРє РєРѕРґР° Р»РѕРІРёС‚ РѕС€РёР±РєРё
             if (textBox1.Text == "")
             {
                 textBox3.Clear();
-                textBox3.Text = "Файл csv не выбран";
+                textBox3.Text = "Р¤Р°Р№Р» csv РЅРµ РІС‹Р±СЂР°РЅ";
             }
             else
             {
-                //Передача данных из datagridview в БД
+                //РЎС‡РёС‚С‹РІР°РµРј РёР· datagridview РІ Р±Рґ
                 string listBB = "";
                 string listC1 = "";
                 string listC2 = "";
@@ -146,12 +146,12 @@ namespace Test
                     {
                         if (dataGridView1[1, i].Value != null && dataGridView1[1, i].Value.ToString().Length != 0 && CountWords(listBB, dataGridView1[1, i].Value.ToString()) == 0)
                         {
-                            //Каждый такой блок находит уникальный процесс и добавляет его при надобности в справочник. Т.е. у нас не будет двух одинаковых значений
+                            //Р—Р°РїРѕР»РЅСЏРµРј С‚Р°Р±Р»РёС†С‹ СѓРЅРёРєР°Р»СЊРЅС‹РјРё Р·РЅР°С‡РµРЅРёСЏРјРё
                             listBB += dataGridView1[1, i].Value.ToString();
                             a = dataGridView1[0, i].Value.ToString();
                             b = dataGridView1[1, i].Value.ToString();
                             help2 = b;
-                            string query = "INSERT INTO [Группы основные] ([Код процесса], [Наименование процесса]) VALUES ('" + f1 + "','" + b + "')";
+                            string query = "INSERT INTO [Р“СЂСѓРїРїС‹ РѕСЃРЅРѕРІРЅС‹Рµ] ([РљРѕРґ РїСЂРѕС†РµСЃСЃР°], [РќР°РёРјРµРЅРѕРІР°РЅРёРµ РїСЂРѕС†РµСЃСЃР°]) VALUES ('" + f1 + "','" + b + "')";
                             OleDbCommand command = new OleDbCommand(query, con);
                             command.ExecuteNonQuery();
                             f1++;
@@ -162,7 +162,7 @@ namespace Test
                             a = dataGridView1[0, i].Value.ToString();
                             b = dataGridView1[2, i].Value.ToString();
                             help1 = b;
-                            string query = "INSERT INTO [Группы вторичные] ([Код репозитория], [Репозиторий БП],[Наименование процесса]) VALUES ('" + f2 + "','" + b + "','" + help2 + "')";
+                            string query = "INSERT INTO [Р“СЂСѓРїРїС‹ РІС‚РѕСЂРёС‡РЅС‹Рµ] ([РљРѕРґ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ], [Р РµРїРѕР·РёС‚РѕСЂРёР№ Р‘Рџ],[РќР°РёРјРµРЅРѕРІР°РЅРёРµ РїСЂРѕС†РµСЃСЃР°]) VALUES ('" + f2 + "','" + b + "','" + help2 + "')";
                             OleDbCommand command = new OleDbCommand(query, con);
                             command.ExecuteNonQuery();
                             f2++;
@@ -172,7 +172,7 @@ namespace Test
                             listC2 += dataGridView1[3, i].Value.ToString();
                             a = dataGridView1[0, i].Value.ToString();
                             b = dataGridView1[3, i].Value.ToString();
-                            string query = "INSERT INTO [Группы третичные] ([Код процесса обслуживания], [Процессы обслуживания ФЛ],[Репозиторий БП]) VALUES ('" + f3 + "','" + b + "','" + help1 + "')";
+                            string query = "INSERT INTO [Р“СЂСѓРїРїС‹ С‚СЂРµС‚РёС‡РЅС‹Рµ] ([РљРѕРґ РїСЂРѕС†РµСЃСЃР° РѕР±СЃР»СѓР¶РёРІР°РЅРёСЏ], [РџСЂРѕС†РµСЃСЃС‹ РѕР±СЃР»СѓР¶РёРІР°РЅРёСЏ Р¤Р›],[Р РµРїРѕР·РёС‚РѕСЂРёР№ Р‘Рџ]) VALUES ('" + f3 + "','" + b + "','" + help1 + "')";
                             OleDbCommand command = new OleDbCommand(query, con);
                             command.ExecuteNonQuery();
                             f3++;
@@ -181,7 +181,7 @@ namespace Test
                         {
                             listC3 += dataGridView1[4, i].Value.ToString();
                             b = dataGridView1[4, i].Value.ToString();
-                            string query = "INSERT INTO [Владельцы процесса] ([Владелец],[Код владельца]) VALUES ('" + b + "','" + f4 + "')";
+                            string query = "INSERT INTO [Р’Р»Р°РґРµР»СЊС†С‹ РїСЂРѕС†РµСЃСЃР°] ([Р’Р»Р°РґРµР»РµС†],[РљРѕРґ РІР»Р°РґРµР»СЊС†Р°]) VALUES ('" + b + "','" + f4 + "')";
                             OleDbCommand command = new OleDbCommand(query, con);
                             command.ExecuteNonQuery();
                             f4++;
@@ -195,12 +195,12 @@ namespace Test
                 catch (System.InvalidOperationException)
                 {
                     textBox3.Clear();
-                    textBox3.Text = "База данных не выбрана";
+                    textBox3.Text = "Р‘Р°Р·Р° РґР°РЅРЅС‹С… РЅРµ РІС‹Р±СЂР°РЅР°";
                 }
                 catch (System.Data.OleDb.OleDbException)
                 {
                     textBox3.Clear();
-                    textBox3.Text = "База данных не пуста";
+                    textBox3.Text = "Р‘Р°Р·Р° РґР°РЅРЅС‹С… РЅРµ РїСѓСЃС‚Р°СЏ";
                 }
                 
             }
@@ -232,6 +232,11 @@ namespace Test
         private void button4_Click(object sender, EventArgs e)
         {
            
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
